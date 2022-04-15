@@ -5,7 +5,7 @@ $(document).ready(function ()
 {
     
     $("#searchBtn").click(function () {
-        console.log($("#cityInput").val())
+        // console.log(JSON.stringify($("#cityInput").val()))
         var city = $("#cityInput").val()
         cityApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
 
@@ -32,7 +32,7 @@ $(document).ready(function ()
                     if ($("#city-current").children().length > 0)
                     {
                         $("#city-current").empty()
-                        console.log('yes')
+                        // console.log('yes')
                     }
                     const searchedCity = $(`<div class="col-12 h-100 bg-warning border border-dark">${city}</div>`)
                     const cityDataUl = $(`<ul style="list-style: none;"></ul>`)
@@ -45,19 +45,47 @@ $(document).ready(function ()
                     cityDataUl.append(cityDataLiHumidity)
                     cityDataUl.append(cityDataLiUv)
                     searchedCity.append(cityDataUl)
-                        $("#city-current").append(searchedCity)
-                        
+                    $("#city-current").append(searchedCity)
+                    if ($("#5-day").children().length > 0) {
+                            $("#5-day").empty()
+                        }    
                     for (let i = 0; i < daily.length - 3; i++) {
                         console.log(daily[i])
                         // var fiveDayLi
                         var dayTemp = $(`<li class="card col-2 bg-primary">Temp: ${daily[i].temp.day} Wind: ${daily[i].wind_speed} Humidity: ${daily[i].humidity}</li>`)
                         $("#5-day").append(dayTemp)
-                    }
+                        }
+                        
                     })
-            })
-    })
+        })
+        cityCheck(city)
         
-        //var citySearch = $(this).siblings("cityInput").val()
-        //console.log(citySearch.val())
-    
+    })
+    var cityCheck = (city) =>
+    {
+        var cityThere = false
+        for (let i = 0; i < localStorage.length; i++) {
+            if (localStorage['city' + i] === city)
+            {
+                cityThere = true
+                break
+            }
+        }
+        if (cityThere === false)
+            {
+            localStorage.setItem('city' + localStorage.length, city)
+            const preSearch = $(`<li>${city}</li>`)
+                        $("#prev-search").append(preSearch)
+        }
+    }
+    var loadCity = function ()
+    {
+        Object.keys(localStorage).forEach((key) =>
+        {
+            city = localStorage.getItem(key)
+            const preSearch = $(`<li>${city}</li>`)
+                        $("#prev-search").append(preSearch)
+        })
+    }
+    loadCity()
 });
