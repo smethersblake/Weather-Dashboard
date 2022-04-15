@@ -27,8 +27,8 @@ $(document).ready(function ()
                         console.log(data)
                         var daily = data.daily
                         var current = data.current
-                        console.log(daily)
-                        console.log (current)
+                        // console.log(daily)
+                        // console.log (current)
                     if ($("#city-current").children().length > 0)
                     {
                         $("#city-current").empty()
@@ -37,7 +37,7 @@ $(document).ready(function ()
                     const searchedCity = $(`<div class="col-12 h-100 bg-warning border border-dark">${city}</div>`)
                     const cityDataUl = $(`<ul style="list-style: none;"></ul>`)
                     const cityDataLiTemp = $(`<li>Temperature: ${current.temp}</li>`)
-                    const cityDataLiWind = $(`<li>Wind: ${current.wind_speed}</li>`)
+                    const cityDataLiWind = $(`<li>Wind Speed: ${current.wind_speed}</li>`)
                     const cityDataLiHumidity = $(`<li>Humidity: ${current.humidity}</li>`)
                     const cityDataLiUv = $(`<li>UV Index: ${current.uvi}</li>`)
                     cityDataUl.append(cityDataLiTemp)
@@ -45,10 +45,13 @@ $(document).ready(function ()
                     cityDataUl.append(cityDataLiHumidity)
                     cityDataUl.append(cityDataLiUv)
                     searchedCity.append(cityDataUl)
-                    $("#city-current").append(searchedCity)
-                    for (let i = 0; i < daily.length - 3; i++) {
-                        console.log('hello')
+                        $("#city-current").append(searchedCity)
                         
+                    for (let i = 0; i < daily.length - 3; i++) {
+                        console.log(daily[i])
+                        // var fiveDayLi
+                        var dayTemp = $(`<li class="card col-2 bg-primary">Temp: ${daily[i].temp.day} Wind: ${daily[i].wind_speed} Humidity: ${daily[i].humidity}</li>`)
+                        $("#5-day").append(dayTemp)
                     }
                     })
             })
