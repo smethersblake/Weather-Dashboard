@@ -15,27 +15,42 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3 bg-warning h-100">dfgd
-                    <div class="row">
-                        <div class="col-12 bg-dark">
-                            <h3>Look up a City</h3>
-                        </div>
-                    </div>
+                <div class="col-3 h-100 pt-3 ">
                     <div class="row">
                         <div class="col-12">
-                            <input type="text" id="cityInput" placeholder="City">
-                            <button type="button" id="searchBtn" class="btn btn-primary"></button>
+                            <h3 class="font-weight-bold">Search for a City:</h3>
+                        </div>
+                    </div>
+                    <div class="row m-1 mb-3">
+                        <div class="col-12">
+                            <div class="input-group my-3">
+
+                                <input class="w-100" type="text" id="cityInput" placeholder="City">
+                            </div>
+                            <div class="my-3">
+
+                                <button type="button" id="searchBtn" class="btn btn-primary w-100">Search</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="city-current" class="col-9 bg-success"></div>
-            </div>
-            <div class="row">
-                <div  class="col-3 bg-success">Previous Searches
-                    <ul id="prev-search" style="list-style: none;">
-                    </ul>
+                <div  class="col-9 ">
+                    <div id="city-current" >
+
+                    </div>
                 </div>
-                <ul id="5-day" class="row d-flex justify-content-around col-9 bg-warning"></ul>
+            </div>
+            <h3 class="col-9 d-flex flex-row-reverse">5 Day Forcast</h3>
+            <div class="col-12">
+                <div class="row">
+                    <div  class="col-3 text-left"><h4>Previous Searches</h4>
+                        <div id="prev-search">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <ul id="5-day" class="col-12 d-flex justify-content-between" ></ul>
+                    </div>
+                </div>
             </div>
         </div>
 

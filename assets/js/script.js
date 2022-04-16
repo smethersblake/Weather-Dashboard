@@ -4,13 +4,9 @@ apiKey = "8188d200fe9794c1ad37fcd90a20900c"
 todayDate = moment().format("l")
 $(document).ready(function ()
 {
-    $("#searchBtn").click(function ()
-    {
-        start()
-            })
 var start = function ()
 {
-            
+        
         
     // console.log(JSON.stringify($("#cityInput").val()))
     var city = $("#cityInput").val().toUpperCase()
@@ -41,7 +37,7 @@ var start = function ()
                             var iconUrl = `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`
                             const icon = $(`<img src="${iconUrl}">`)
                             // loadIcon(current)
-                            const searchedCity = $(`<div class="col-12 h-100 text-left bg-warning border border-dark"><h3>${city} (${todayDate})</h3></div>`)
+                            const searchedCity = $(`<div class="col-12 h-100 text-left bg-warning border border-dark mt-2"><h3>${city} (${todayDate})</h3></div>`)
                             const cityDataUl = $(`<ul style="list-style: none;"></ul>`)
                             const cityDataLiTemp = $(`<li>Temperature: ${current.temp}</li>`)
                             const cityDataLiWind = $(`<li>Wind Speed: ${current.wind_speed}</li>`)
@@ -64,20 +60,31 @@ var start = function ()
                                 console.log(daily[i])
                                 var dailyIconUrl = `http://openweathermap.org/img/wn/${daily[i].weather[0].icon}@2x.png`
                                 const dailyIcon = $(`<img  src="${dailyIconUrl}" >`)
+                                const imgBgColor = $(`<div id="bg-color" class="bg-primary"></div>`)
                                 var fiveDayDate = moment().add(i, 'days').format("l")
-                                var dayTemp = $(`<div class="row"><ul style="list-style: none;" class='col-12 card bg-dark' id="day-list${i}"><h5 class="card-title text-light">${fiveDayDate}</h5><li class="bg-primary">Temp: ${daily[i].temp.day}</li><li class="bg-primary"> Wind: ${daily[i].wind_speed}</li><li class="bg-primary"> Humidity: ${daily[i].humidity}</li></ul></div>`)
+                                var dayTemp = $(`<div class="row"><ul style="list-style: none;" class='col-12 card bg-primary' id="day-list${i}"><h5 class="card-title text-light">${fiveDayDate}</h5><li class="bg-primary">Temp: ${daily[i].temp.day}</li><li class="bg-primary"> Wind: ${daily[i].wind_speed}</li><li class="bg-primary"> Humidity: ${daily[i].humidity}</li></ul></div>`)
                         
                                 $("#5-day").append(dayTemp)
-                                $(`#day-list${i}`).append(dailyIcon)
+                                imgBgColor.append(dailyIcon)
+                                $(`#day-list${i}`).append(imgBgColor)
                             }
                         
                         })
                 })
             cityCheck(city)
         }
-
+var loadCity = function ()
+    {
+        Object.keys(localStorage).forEach((key) =>
+        {
+            city = localStorage.getItem(key)
+            const preSearch = $(`<p class="py-2 pre-link bg-secondary border rounded text-center">${city}</a></p>`)
+                        $("#prev-search").append(preSearch)
+        })
+    }
     var cityCheck = (city) =>
     {
+        
         var cityThere = false
         for (let i = 0; i < localStorage.length; i++) {
             if (localStorage['city' + i] === city)
@@ -89,25 +96,27 @@ var start = function ()
         if (cityThere === false)
             {
             localStorage.setItem('city' + localStorage.length, city)
-            const preSearch = $(`<li class"pt-5">${city}</li>`)
+            const preSearch = $(`<p class="py-2 pre-link bg-secondary border rounded text-center">${city}</a></p>`)
                         $("#prev-search").append(preSearch)
         }
     }
-    var loadCity = function ()
-    {
-        Object.keys(localStorage).forEach((key) =>
-        {
-            city = localStorage.getItem(key)
-            const preSearch = $(`<li class="pt-3 pre-link">${city}</a></li>`)
-                        $("#prev-search").append(preSearch)
-        })
-    }
     loadCity()
+    
     
 $(".pre-link").on("click", function ()
     {
     const preLink = $("#cityInput").val($(this).text())
     start()
-    })
+})
+    if ($("#city-current").children().length === 0)
+    {
+        console.log("null")
+        $("#cityInput").val("minneapolis") 
+        start()
+    }
+    $("#searchBtn").click(function ()
+    {
+        start()
+            })
+    
 });
-
