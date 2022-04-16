@@ -4,6 +4,7 @@ apiKey = "8188d200fe9794c1ad37fcd90a20900c"
 todayDate = moment().format("l")
 $(document).ready(function ()
 {
+    var uviColor
 var start = function ()
 {
         
@@ -27,29 +28,33 @@ var start = function ()
                     console.log(data)
                     var daily = data.daily
                     var current = data.current
-                            // console.log(daily)
-                            // console.log (current)
-                            if ($("#city-current").children().length > 0)
-                            {
-                                $("#city-current").empty()
-                                // console.log('yes')
-                            }
+                    var uviColor
+                    var humidityColor
+                    // console.log(daily)
+                    // console.log (current)
+                    if ($("#city-current").children().length > 0)
+                    {
+                        $("#city-current").empty()
+                        // console.log('yes')
+                    }
+                    
                             var iconUrl = `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`
                             const icon = $(`<img src="${iconUrl}">`)
                             // loadIcon(current)
-                            const searchedCity = $(`<div class="col-12 h-100 text-left bg-warning border border-dark mt-2"><h3>${city} (${todayDate})</h3></div>`)
-                            const cityDataUl = $(`<ul style="list-style: none;"></ul>`)
-                            const cityDataLiTemp = $(`<li>Temperature: ${current.temp}</li>`)
-                            const cityDataLiWind = $(`<li>Wind Speed: ${current.wind_speed}</li>`)
-                            const cityDataLiHumidity = $(`<li>Humidity: ${current.humidity}</li>`)
-                            const cityDataLiUv = $(`<li>UV Index: ${current.uvi}</li>`)
+                            const searchedCity = $(`<div class="col-12 h-100 text-left border border-dark mt-2"><h3>${city} (${todayDate})</h3></div>`)
+                            const cityDataUl = $(`<div" "class=col"></div>`)
+                            const cityDataLiTemp = $(`<h5 class="col-3">Temperature: ${current.temp}</h5>`)
+                            const cityDataLiWind = $(`<h5 class="col-3">Wind Speed: ${current.wind_speed}</h5>`)
+                            const cityDataLiHumidity = $(`<h5 class="col-3">Humidity: ${current.humidity}</h5>`)
+                            const cityDataLiUv = $(`<h5 class="fs-6 col-3 ">UV Index: <span id="uviColor">${current.uvi}  </span></h5>`)
                             cityDataUl.append(cityDataLiTemp)
                             cityDataUl.append(cityDataLiWind)
                             cityDataUl.append(cityDataLiHumidity)
                             cityDataUl.append(cityDataLiUv)
                             searchedCity.append(icon)
                             $("#city-current").append(searchedCity)
-                            searchedCity.append(cityDataUl)
+                    searchedCity.append(cityDataUl)
+                        uvColor(current)
                         
                             if ($("#5-day").children().length > 0)
                             {
@@ -117,6 +122,14 @@ $(".pre-link").on("click", function ()
     $("#searchBtn").click(function ()
     {
         start()
-            })
+    })
+    var uvColor = function (current)
+    {
+        if (current.uvi <= 3)
+        {
+            $("#uviColor").addClass("bg-success rounded")
+        }
+    }
+
     
 });
