@@ -4,7 +4,15 @@ apiKey = "8188d200fe9794c1ad37fcd90a20900c"
 todayDate = moment().format("l")
 $(document).ready(function ()
 {
-    var uviColor
+
+    // var errorCheck = (response) =>
+    // {
+    //     if (!response.ok)
+    //     {
+    //         throw Error(response.statusText)
+    //     }
+    //     //return response
+    // }
 var start = function ()
 {
         
@@ -13,11 +21,15 @@ var start = function ()
     var city = $("#cityInput").val().toUpperCase()
     cityApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
 
-    fetch(cityApiUrl)
-        
-        .then((response) => response.json())
-        .then(function (data)
+    fetch(cityApiUrl).then(function (response)
+    {
+        if (!response.ok)
         {
+            throw Error(response.statusText)
+        }
+        response.json().then(function (data)
+        {
+            console.log(data)
             var cityLon = data[0].lon
             var cityLat = data[0].lat
             apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&units=imperial&exclude={part}&appid=${apiKey}`
@@ -37,7 +49,6 @@ var start = function ()
                         $("#city-current").empty()
                         // console.log('yes')
                     }
-                    
                             var iconUrl = `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`
                             const icon = $(`<img src="${iconUrl}">`)
                             // loadIcon(current)
@@ -76,6 +87,7 @@ var start = function ()
                         
                         })
                 })
+    })
             cityCheck(city)
         }
 var loadCity = function ()
