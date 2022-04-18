@@ -1,5 +1,5 @@
 
-// cityApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}"
+// cityApiUrl = "https://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}"
 apiKey = "8188d200fe9794c1ad37fcd90a20900c"
 todayDate = moment().format("l")
 $(document).ready(function ()
@@ -19,7 +19,7 @@ var start = function ()
         
     // console.log(JSON.stringify($("#cityInput").val()))
     var city = $("#cityInput").val().toUpperCase()
-    cityApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
+    cityApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
 
     fetch(cityApiUrl).then(function (response)
     {
@@ -49,7 +49,7 @@ var start = function ()
                         $("#city-current").empty()
                         // console.log('yes')
                     }
-                            var iconUrl = `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`
+                            var iconUrl = `https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`
                             const icon = $(`<img src="${iconUrl}">`)
                             // loadIcon(current)
                             const searchedCity = $(`<div class="col-12 h-100 text-left border border-dark mt-2"><h3>${city} (${todayDate})</h3></div>`)
@@ -74,7 +74,7 @@ var start = function ()
                             for (let i = 0; i < daily.length - 3; i++)
                             {
                                 console.log(daily[i])
-                                var dailyIconUrl = `http://openweathermap.org/img/wn/${daily[i].weather[0].icon}@2x.png`
+                                var dailyIconUrl = `https://openweathermap.org/img/wn/${daily[i].weather[0].icon}@2x.png`
                                 const dailyIcon = $(`<img  src="${dailyIconUrl}" >`)
                                 const imgBgColor = $(`<div id="bg-color" class="bg-primary"></div>`)
                                 var fiveDayDate = moment().add(i, 'days').format("l")
